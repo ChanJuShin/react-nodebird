@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import { Button, Form, Input } from "antd";
 import Link from "next/link";
 import styled from "styled-components";
-import PropTypes from "prop-types";
 import useInput from "../hooks/useInput";
 import { loginAction } from "../reducers";
 
@@ -55,9 +54,5 @@ const LoginForm = ( ) => {
         </FormWrapper>
     );
 }
-
-LoginForm.propTypes = {
-    setIsLoggedIn: PropTypes.func.isRequired
-};
 
 export default LoginForm;
