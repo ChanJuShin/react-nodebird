@@ -1,23 +1,23 @@
-import React, { useCallback, useRef, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Form, Input, Button } from 'antd'
-import { addPost } from '../reducers/post'
+import React, { useCallback, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Form, Input, Button } from 'antd';
+import { addPostRequestAction } from '../reducers/post';
 
 const PostForm = () => {
-  const [text, setText] = useState('')
+  const [text, setText] = useState('');
   const onChangeText = useCallback((e) => {
-    setText(e.target.value)
-  }, [])
-  const imageInput = useRef()
-  const { imagePaths } = useSelector((state) => state.post)
-  const dispatch = useDispatch()
+    setText(e.target.value);
+  }, []);
+  const imageInput = useRef();
+  const { imagePaths } = useSelector((state) => state.post);
+  const dispatch = useDispatch();
   const onSubmit = useCallback(() => {
-    dispatch(addPost)
-    setText('')
-  }, [])
+    dispatch(addPostRequestAction());
+    setText('');
+  }, []);
   const onClickImageUpload = useCallback(() => {
-    imageInput.current.click()
-  }, [imageInput.current])
+    imageInput.current.click();
+  }, [imageInput.current]);
   return (
     <Form
       style={{ margin: '10px 0 20px' }}
@@ -48,7 +48,7 @@ const PostForm = () => {
         ))}
       </div>
     </Form>
-  )
-}
+  );
+};
 
-export default PostForm
+export default PostForm;
