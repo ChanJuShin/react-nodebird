@@ -8,21 +8,31 @@ import {
   MessageOutlined,
   RetweetOutlined
 } from '@ant-design/icons';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PostImages from './PostImages';
 import CommentForm from './CommentForm';
 import PostCardContent from './PostCardContent';
+import { removePostRequestAction } from '../reducers/post';
 
 const PostCard = ({ post }) => {
+  const dispatch = useDispatch();
   const [liked, setLiked] = useState(false);
-  const [commentFormOpend, setCommentFormOpend] = useState(false);
+  const [commentFormOpened, setCommentFormOpened] = useState(false);
+
   const onToggleLike = useCallback(() => {
     setLiked((prev) => !prev);
   }, []);
+
   const onToggleComment = useCallback(() => {
-    setCommentFormOpend((prev) => !prev);
+    setCommentFormOpened((prev) => !prev);
   }, []);
+
+  const onRemovePost = useCallback(() => {
+    dispatch(removePostRequestAction(post.id));
+  }, [post.id]);
+
   const id = useSelector((state) => state.user.me?.id);
+  const { removePostLoading } = useSelector((state) => state.post);
   return (
     <div style={{ marginBottom: 20 }}>
       <Card
@@ -46,7 +56,13 @@ const PostCard = ({ post }) => {
                 {id && post.User.id === id ? (
                   <>
                     <Button>수정</Button>
-                    <Button type="danger">삭제</Button>
+                    <Button
+                      type="danger"
+                      onClick={onRemovePost}
+                      loading={removePostLoading}
+                    >
+                      삭제
+                    </Button>
                   </>
                 ) : (
                   <Button>신고</Button>
@@ -64,7 +80,7 @@ const PostCard = ({ post }) => {
           description={<PostCardContent postData={post.content} />}
         />
       </Card>
-      {commentFormOpend && (
+      {commentFormOpened && (
         <div>
           <CommentForm post={post} />
           <List
@@ -99,7 +115,9 @@ PostCard.propTypes = {
     createdAt: PropTypes.string,
     Comments: PropTypes.arrayOf(
       PropTypes.shape({
+        id: PropTypes.string,
         User: PropTypes.shape({
+          id: PropTypes.string,
           nickname: PropTypes.string
         }),
         content: PropTypes.string
@@ -107,6 +125,7 @@ PostCard.propTypes = {
     ),
     Images: PropTypes.arrayOf(
       PropTypes.shape({
+        id: PropTypes.string,
         src: PropTypes.string
       })
     )
