@@ -84,7 +84,7 @@ PostImages.propTypes = {
     propTypes.shape({
       src: propTypes.string
     })
-  )
+  ).isRequired
 };
 
 export default PostImages;

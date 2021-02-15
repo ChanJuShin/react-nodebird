@@ -1,7 +1,7 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Button, Card, List } from 'antd'
-import { StopOutlined } from '@ant-design/icons'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Button, Card, List } from 'antd';
+import { StopOutlined } from '@ant-design/icons';
 
 const FollowList = ({ header, data }) => {
   return (
@@ -25,12 +25,12 @@ const FollowList = ({ header, data }) => {
         </List.Item>
       )}
     />
-  )
-}
+  );
+};
 
 FollowList.propTypes = {
   header: PropTypes.string.isRequired,
-  data: PropTypes.array.isRequired
-}
+  data: PropTypes.shape({}).isRequired
+};
 
-export default FollowList
+export default FollowList;

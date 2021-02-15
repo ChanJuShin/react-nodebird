@@ -1,5 +1,5 @@
 import { all, delay, fork, put, takeEvery } from 'redux-saga/effects';
-import axios from 'axios';
+// import axios from 'axios';
 import {
   LOG_IN_FAILURE,
   LOG_IN_REQUEST,
@@ -12,9 +12,11 @@ import {
   SIGN_UP_SUCCESS
 } from '../reducers/user';
 
+/*
 function logInAPI(data) {
   return axios.post('/api/login', data);
 }
+*/
 
 function* logIn(action) {
   try {
@@ -32,9 +34,11 @@ function* logIn(action) {
   }
 }
 
+/*
 function logOutAPI() {
   return axios.post('/api/logout');
 }
+*/
 
 function* logOut() {
   try {
@@ -51,9 +55,11 @@ function* logOut() {
   }
 }
 
+/*
 function signUpAPI() {
   return axios.post('/api/signup');
 }
+*/
 
 function* signUp() {
   try {

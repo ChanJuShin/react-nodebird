@@ -83,8 +83,7 @@ const PostCard = ({ post }) => {
           />
         </div>
       )}
-      {/*<CommentForm />
-      <Comments />*/}
+      {/* <CommentForm /> <Comments /> */}
     </div>
   );
 };
@@ -97,7 +96,7 @@ PostCard.propTypes = {
       nickname: PropTypes.string
     }),
     content: PropTypes.string,
-    createdAt: PropTypes.object,
+    createdAt: PropTypes.string,
     Comments: PropTypes.arrayOf(
       PropTypes.shape({
         User: PropTypes.shape({
