@@ -1,6 +1,9 @@
 import { all, delay, fork, put, takeEvery } from 'redux-saga/effects';
 // import axios from 'axios';
 import {
+  FOLLOW_FAILURE,
+  FOLLOW_REQUEST,
+  FOLLOW_SUCCESS,
   LOG_IN_FAILURE,
   LOG_IN_REQUEST,
   LOG_IN_SUCCESS,
@@ -9,7 +12,10 @@ import {
   LOG_OUT_SUCCESS,
   SIGN_UP_FAILURE,
   SIGN_UP_REQUEST,
-  SIGN_UP_SUCCESS
+  SIGN_UP_SUCCESS,
+  UN_FOLLOW_FAILURE,
+  UN_FOLLOW_REQUEST,
+  UN_FOLLOW_SUCCESS
 } from '../reducers/user';
 
 /*
@@ -76,6 +82,50 @@ function* signUp() {
   }
 }
 
+/*
+function followAPI() {
+  return axios.post('/api/followw');
+}
+*/
+
+function* follow(action) {
+  try {
+    // const result = yield call(followAPI);
+    yield delay(1000);
+    yield put({
+      type: FOLLOW_SUCCESS,
+      data: action.data
+    });
+  } catch (err) {
+    yield put({
+      type: FOLLOW_FAILURE,
+      data: err.response.data
+    });
+  }
+}
+
+/*
+function unFollowAPI() {
+  return axios.post('/api/unFollow');
+}
+*/
+
+function* unFollow(action) {
+  try {
+    // const result = yield call(unFollowAPI);
+    yield delay(1000);
+    yield put({
+      type: UN_FOLLOW_SUCCESS,
+      data: action.data
+    });
+  } catch (err) {
+    yield put({
+      type: UN_FOLLOW_FAILURE,
+      data: err.response.data
+    });
+  }
+}
+
 function* watchLogIn() {
   yield takeEvery(LOG_IN_REQUEST, logIn);
 }
@@ -88,6 +138,20 @@ function* watchSignUp() {
   yield takeEvery(SIGN_UP_REQUEST, signUp);
 }
 
+function* watchFollow() {
+  yield takeEvery(FOLLOW_REQUEST, follow);
+}
+
+function* watchUnFollow() {
+  yield takeEvery(UN_FOLLOW_REQUEST, unFollow);
+}
+
 export default function* userSaga() {
-  yield all([fork(watchLogIn), fork(watchLogOut), fork(watchSignUp)]);
+  yield all([
+    fork(watchLogIn),
+    fork(watchLogOut),
+    fork(watchSignUp),
+    fork(watchFollow),
+    fork(watchUnFollow)
+  ]);
 }

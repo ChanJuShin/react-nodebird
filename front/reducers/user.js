@@ -13,6 +13,14 @@ export const initialState = {
   changeNicknameLoading: false,
   changeNicknameDone: false,
   changeNicknameError: null,
+  followLoadingId: null,
+  followLoading: false,
+  followDone: false,
+  followError: null,
+  unFollowLoadingId: null,
+  unFollowLoading: false,
+  unFollowDone: false,
+  unFollowError: null,
   me: null,
   signUpData: {},
   loginData: {}
@@ -77,7 +85,7 @@ export const logOutRequestAction = () => {
 
 export const signUpRequestAction = (data) => {
   return {
-    type: SIGN_UP_FAILURE,
+    type: SIGN_UP_REQUEST,
     data
   };
 };
@@ -85,6 +93,20 @@ export const signUpRequestAction = (data) => {
 export const changeNicknameRequestAction = (data) => {
   return {
     type: CHANGE_NICKNAME_REQUEST,
+    data
+  };
+};
+
+export const followRequestAction = (data) => {
+  return {
+    type: FOLLOW_REQUEST,
+    data
+  };
+};
+
+export const unFollowRequestAction = (data) => {
+  return {
+    type: UN_FOLLOW_REQUEST,
     data
   };
 };
@@ -145,6 +167,38 @@ const reducer = (state = initialState, action) => {
       case CHANGE_NICKNAME_FAILURE:
         draft.changeNicknameLoading = false;
         draft.changeNicknameError = action.error;
+        break;
+      case FOLLOW_REQUEST:
+        draft.followLoadingId = action.data;
+        draft.followLoading = true;
+        draft.followDone = false;
+        draft.followError = null;
+        break;
+      case FOLLOW_SUCCESS:
+        draft.followLoading = false;
+        draft.followDone = true;
+        draft.me.Followings.push({ id: action.data });
+        break;
+      case FOLLOW_FAILURE:
+        draft.followLoading = false;
+        draft.followError = action.error;
+        break;
+      case UN_FOLLOW_REQUEST:
+        draft.unFollowLoadingId = action.data;
+        draft.unFollowLoading = true;
+        draft.unFollowDone = false;
+        draft.unFollowError = null;
+        break;
+      case UN_FOLLOW_SUCCESS:
+        draft.unFollowLoading = false;
+        draft.unFollowDone = true;
+        draft.me.Followings = draft.me.Followings.filter(
+          (v) => v.id !== action.data
+        );
+        break;
+      case UN_FOLLOW_FAILURE:
+        draft.unFollowLoading = false;
+        draft.unFollowError = action.error;
         break;
       case ADD_POST_TO_ME:
         draft.me.Posts.unshift({ id: action.data });
