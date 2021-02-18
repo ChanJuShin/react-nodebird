@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { Form, Input, Checkbox, Button } from 'antd';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { SIGN_UP_REQUEST } from '../reducers/user';
+import { SIGN_UP_REQUEST, signUpRequestAction } from '../reducers/user';
 import AppLayout from '../components/AppLayout';
 import useInput from '../hooks/useInput';
 
@@ -43,10 +43,7 @@ const Signup = () => {
     if (!term) {
       return setTermError(true);
     }
-    dispatch({
-      type: SIGN_UP_REQUEST,
-      data: { email, password, nickname }
-    });
+    dispatch(signUpRequestAction({ email, password, nickname }));
   }, [email, password, passwordCheck, term]);
   return (
     <>
