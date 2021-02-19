@@ -67,15 +67,16 @@ function signUpAPI(data) {
 
 function* signUp(action) {
   try {
-    const result = yield call(signUpAPI, action.data);
-    console.log(result);
+    yield call(signUpAPI, action.data);
     yield put({
       type: SIGN_UP_SUCCESS
     });
   } catch (err) {
+    console.log('err.response: ', err.response);
+    console.log('err.response.data: ', err.response.data);
     yield put({
       type: SIGN_UP_FAILURE,
-      data: err.response.data
+      error: err.response.data
     });
   }
 }
