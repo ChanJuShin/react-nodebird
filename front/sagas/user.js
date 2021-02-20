@@ -32,7 +32,7 @@ function* logIn(action) {
   } catch (err) {
     yield put({
       type: LOG_IN_FAILURE,
-      data: err.response.data
+      error: err.response.data
     });
   }
 }
@@ -43,7 +43,7 @@ function logOutAPI(data) {
 
 function* logOut(action) {
   try {
-    const result = yield call(logOutAPI, action.data);
+    yield call(logOutAPI, action.data);
     yield put({
       type: LOG_OUT_SUCCESS
     });
