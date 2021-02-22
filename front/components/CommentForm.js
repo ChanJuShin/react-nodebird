@@ -64,7 +64,7 @@ CommentForm.propTypes = {
       nickname: PropTypes.string
     }),
     content: PropTypes.string,
-    createdAt: PropTypes.instanceOf(Date),
+    createdAt: PropTypes.string,
     Comments: PropTypes.arrayOf(
       PropTypes.shape({
         User: PropTypes.shape({

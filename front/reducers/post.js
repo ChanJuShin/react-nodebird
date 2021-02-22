@@ -20,32 +20,6 @@ export const initialState = {
   addCommentError: null
 };
 
-export const generateDummyPost = (number) =>
-  Array(number)
-    .fill()
-    .map(() => ({
-      id: shortid.generate(),
-      User: {
-        id: shortid.generate(),
-        nickname: faker.name.findName()
-      },
-      content: faker.lorem.paragraph(),
-      Images: [
-        {
-          src: faker.image.image()
-        }
-      ],
-      Comments: [
-        {
-          User: {
-            id: shortid.generate(),
-            nickname: faker.name.findName()
-          },
-          content: faker.lorem.sentence()
-        }
-      ]
-    }));
-
 export const LOAD_POSTS_REQUEST = 'LOAD_POSTS_REQUEST';
 export const LOAD_POSTS_SUCCESS = 'LOAD_POSTS_SUCCESS';
 export const LOAD_POSTS_FAILURE = 'LOAD_POSTS_FAILURE';
