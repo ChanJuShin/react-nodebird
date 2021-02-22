@@ -1,6 +1,9 @@
 import produce from 'immer';
 
 export const initialState = {
+  loadUserLoading: false,
+  loadUserDone: false,
+  loadUserError: false,
   logInLoading: false,
   logInDone: false,
   logInError: false,
@@ -25,6 +28,10 @@ export const initialState = {
   signUpData: {},
   loginData: {}
 };
+
+export const LOAD_USER_REQUEST = 'LOAD_USER_REQUEST';
+export const LOAD_USER_SUCCESS = 'LOAD_USER_SUCCESS';
+export const LOAD_USER_FAILURE = 'LOAD_USER_FAILURE';
 
 export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
@@ -53,23 +60,6 @@ export const UN_FOLLOW_FAILURE = 'UN_FOLLOW_FAILURE';
 export const ADD_POST_TO_ME = 'ADD_POST_TO_ME';
 export const REMOVE_POST_OF_ME = 'REMOVE_POST_OF_ME';
 
-const dummyUser = (data) => ({
-  ...data,
-  nickname: '제로초',
-  id: 1,
-  Posts: [{ id: 1 }],
-  Followings: [
-    { nickname: '부기초' },
-    { nickname: 'Chanho Lee' },
-    { nickname: 'neue zeal' }
-  ],
-  Followers: [
-    { nickname: '부기초' },
-    { nickname: 'Chanho Lee' },
-    { nickname: 'neue zeal' }
-  ]
-});
-
 export const logInRequestAction = (data) => {
   return {
     type: LOG_IN_REQUEST,
@@ -80,6 +70,12 @@ export const logInRequestAction = (data) => {
 export const logOutRequestAction = () => {
   return {
     type: LOG_OUT_REQUEST
+  };
+};
+
+export const loadUserRequestAction = () => {
+  return {
+    type: LOAD_USER_REQUEST
   };
 };
 
@@ -114,10 +110,24 @@ export const unFollowRequestAction = (data) => {
 const reducer = (state = initialState, action) => {
   return produce(state, (draft) => {
     switch (action.type) {
+      case LOAD_USER_REQUEST:
+        draft.loadUserLoading = true;
+        draft.loadUserDone = false;
+        draft.loadUserError = null;
+        break;
+      case LOAD_USER_SUCCESS:
+        draft.loadUserLoading = false;
+        draft.loadUserDone = true;
+        draft.me = action.data;
+        break;
+      case LOAD_USER_FAILURE:
+        draft.loadUserLoading = false;
+        draft.loadUserError = action.error;
+        break;
       case LOG_IN_REQUEST:
         draft.logInLoading = true;
         draft.logInDone = false;
-        draft.loginErr = null;
+        draft.logInError = null;
         break;
       case LOG_IN_SUCCESS:
         draft.logInLoading = false;
