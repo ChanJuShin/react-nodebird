@@ -50,7 +50,7 @@ function* logOut(action) {
   } catch (err) {
     yield put({
       type: LOG_OUT_FAILURE,
-      data: err.response.data
+      error: err.response.data
     });
   }
 }
@@ -92,7 +92,7 @@ function* follow(action) {
   } catch (err) {
     yield put({
       type: FOLLOW_FAILURE,
-      data: err.response.data
+      error: err.response.data
     });
   }
 }
@@ -114,7 +114,7 @@ function* unFollow(action) {
   } catch (err) {
     yield put({
       type: UN_FOLLOW_FAILURE,
-      data: err.response.data
+      error: err.response.data
     });
   }
 }

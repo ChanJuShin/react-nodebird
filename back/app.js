@@ -21,7 +21,8 @@ passportConfig();
 
 app.use(
   cors({
-    origin: true
+    origin: true,
+    credentials: true
   })
 );
 app.use(express.json());
