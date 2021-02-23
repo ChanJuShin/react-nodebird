@@ -38,7 +38,7 @@ FollowButton.propTypes = {
   post: PropTypes.shape({
     id: PropTypes.number,
     User: PropTypes.shape({
-      id: PropTypes.string,
+      id: PropTypes.number,
       nickname: PropTypes.string
     }),
     content: PropTypes.string,
@@ -50,7 +50,7 @@ FollowButton.propTypes = {
     Comments: PropTypes.arrayOf(
       PropTypes.shape({
         User: PropTypes.shape({
-          id: PropTypes.string,
+          id: PropTypes.number,
           nickname: PropTypes.string
         }),
         content: PropTypes.string
