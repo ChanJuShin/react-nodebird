@@ -20,7 +20,10 @@ const FollowButton = ({ post }) => {
     } else {
       dispatch(followRequestAction(post.User.id));
     }
-  });
+  }, [isFollowing]);
+  if (post.User.id === me.id) {
+    return null;
+  }
   return (
     <Button
       loading={
