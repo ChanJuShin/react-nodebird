@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, Form, Input } from 'antd';
 import {
   addPostRequestAction,
+  removeImageRequestAction,
   uploadImagesRequestAction
 } from '../reducers/post';
 import useInput from '../hooks/useInput';
@@ -36,13 +37,19 @@ const PostForm = () => {
   }, [imageInput.current]);
 
   const onChangeImages = useCallback((e) => {
-    console.log('images', e.target.files);
     const imageFormData = new FormData();
     [].forEach.call(e.target.files, (f) => {
       imageFormData.append('image', f);
     });
     dispatch(uploadImagesRequestAction(imageFormData));
   }, []);
+
+  const onRemoveImage = useCallback(
+    (index) => () => {
+      dispatch(removeImageRequestAction(index));
+    },
+    []
+  );
 
   return (
     <Form
@@ -76,11 +83,15 @@ const PostForm = () => {
         </Button>
       </div>
       <div>
-        {imagePaths.map((v) => (
+        {imagePaths.map((v, i) => (
           <div key={v} style={{ display: 'inline-block' }}>
-            <img src={v} style={{ width: '200px' }} alt={v} />
+            <img
+              src={`http://localhost:3065/${v}`}
+              style={{ width: '200px' }}
+              alt={v}
+            />
             <div>
-              <Button>제거</Button>
+              <Button onClick={onRemoveImage(i)}>제거</Button>
             </div>
           </div>
         ))}

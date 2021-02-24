@@ -55,6 +55,8 @@ export const ADD_COMMENT_REQUEST = 'ADD_COMMENT_REQUEST';
 export const ADD_COMMENT_SUCCESS = 'ADD_COMMENT_SUCCESS';
 export const ADD_COMMENT_FAILURE = 'ADD_COMMENT_FAILURE';
 
+export const REMOVE_IMAGE = 'REMOVE_IMAGE';
+
 export const unlikePosttRequestAction = (data) => ({
   type: UNLIKE_POST_REQUEST,
   data
@@ -86,6 +88,11 @@ export const removePostRequestAction = (data) => ({
 
 export const addCommentRequestAction = (data) => ({
   type: ADD_COMMENT_REQUEST,
+  data
+});
+
+export const removeImageRequestAction = (data) => ({
+  type: REMOVE_IMAGE,
   data
 });
 
@@ -198,6 +205,9 @@ const reducer = (state = initialState, action) => {
       case ADD_COMMENT_FAILURE:
         draft.addCommentLoading = false;
         draft.addCommentError = action.error;
+        break;
+      case REMOVE_IMAGE:
+        draft.imagePaths = draft.imagePaths.filter((v, i) => i !== action.data);
         break;
       default:
         break;
