@@ -32,7 +32,7 @@ const ImagesZoom = ({ images, onClose }) => {
           >
             {images.map((y) => (
               <ImgWrapper key={y.src}>
-                <img src={y.src} alt={y.src} />
+                <img src={`http://localhost:3065/${y.src}`} alt={y.src} />
               </ImgWrapper>
             ))}
           </Slick>

@@ -28,8 +28,16 @@ const PostForm = () => {
   }, [addPostError]);
 
   const onSubmit = useCallback(() => {
-    dispatch(addPostRequestAction(text));
-  }, [text]);
+    if (!text || !text.trim()) {
+      return alert('게시글을 작성해주세요.');
+    }
+    const formData = new FormData();
+    imagePaths.forEach((p) => {
+      formData.append('image', p);
+    });
+    formData.append('content', text);
+    dispatch(addPostRequestAction(formData));
+  }, [text, imagePaths]);
 
   const imageInput = useRef();
   const onClickImageUpload = useCallback(() => {
