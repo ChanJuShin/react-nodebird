@@ -74,8 +74,9 @@ export const likePostRequestAction = (data) => ({
   data
 });
 
-export const loadPostRequestAction = () => ({
-  type: LOAD_POSTS_REQUEST
+export const loadPostRequestAction = (data) => ({
+  type: LOAD_POSTS_REQUEST,
+  data
 });
 
 export const uploadImagesRequestAction = (data) => ({
@@ -151,8 +152,8 @@ const reducer = (state = initialState, action) => {
       case LOAD_POSTS_SUCCESS:
         draft.loadPostsLoading = false;
         draft.loadPostsDone = true;
-        draft.mainPosts = action.data.concat(draft.mainPosts);
-        draft.hasMorePosts = draft.mainPosts.length < 50;
+        draft.mainPosts = draft.mainPosts.concat(action.data);
+        draft.hasMorePosts = draft.mainPosts.length === 10;
         break;
       case LOAD_POSTS_FAILURE:
         draft.loadPostsLoading = false;
