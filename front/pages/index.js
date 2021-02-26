@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { END } from 'redux-saga';
+import axios from 'axios';
 import AppLayout from '../components/AppLayout';
 import PostForm from '../components/PostForm';
 import PostCard from '../components/PostCard';
 import { loadPostRequestAction } from '../reducers/post';
-import { loadUserRequestAction } from '../reducers/user';
+import { loadMyInfoRequestAction } from '../reducers/user';
 import wrapper from '../store/configureStore';
 
 const Home = () => {
@@ -54,7 +55,12 @@ const Home = () => {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   async (context) => {
-    context.store.dispatch(loadUserRequestAction());
+    const cookie = context.req ? context.req.headers.cookie : '';
+    axios.defaults.headers.Cookie = '';
+    if (context.req && cookie) {
+      axios.defaults.headers.Cookie = cookie;
+    }
+    context.store.dispatch(loadMyInfoRequestAction());
     context.store.dispatch(loadPostRequestAction());
     context.store.dispatch(END);
     await context.store.sagaTask.toPromise();
