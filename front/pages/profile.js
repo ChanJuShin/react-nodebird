@@ -2,13 +2,18 @@ import React, { useEffect } from 'react';
 import Head from 'next/head';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
+import axios from 'axios';
+import { END } from 'redux-saga';
 import AppLayout from '../components/AppLayout';
 import NicknameEditForm from '../components/NicknameEditForm';
 import FollowList from '../components/FollowList';
 import {
   loadFollowersRequestAction,
-  loadFollowingsRequestAction
+  loadFollowingsRequestAction,
+  loadMyInfoRequestAction
 } from '../reducers/user';
+import wrapper from '../store/configureStore';
+import { loadPostRequestAction } from '../reducers/post';
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -44,5 +49,19 @@ const Profile = () => {
     </>
   );
 };
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  async (context) => {
+    const cookie = context.req ? context.req.headers.cookie : '';
+    axios.defaults.headers.Cookie = '';
+    if (context.req && cookie) {
+      axios.defaults.headers.Cookie = cookie;
+    }
+    context.store.dispatch(loadMyInfoRequestAction());
+    context.store.dispatch(loadPostRequestAction());
+    context.store.dispatch(END);
+    await context.store.sagaTask.toPromise();
+  }
+);
 
 export default Profile;

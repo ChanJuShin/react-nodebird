@@ -59,7 +59,7 @@ function loadUserAPI(data) {
   return axios.get(`/user/${data}`);
 }
 
-function* loadUser(actions) {
+function* loadUser(action) {
   try {
     const result = yield call(loadUserAPI, action.data);
     yield put({

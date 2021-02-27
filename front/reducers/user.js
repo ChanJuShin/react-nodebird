@@ -100,9 +100,10 @@ export const logOutRequestAction = () => {
   };
 };
 
-export const loadUserRequestAction = () => {
+export const loadUserRequestAction = (data) => {
   return {
-    type: LOAD_USER_REQUEST
+    type: LOAD_USER_REQUEST,
+    data
   };
 };
 
