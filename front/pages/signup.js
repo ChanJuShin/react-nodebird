@@ -10,7 +10,7 @@ import { loadMyInfoRequestAction, signUpRequestAction } from '../reducers/user';
 import AppLayout from '../components/AppLayout';
 import useInput from '../hooks/useInput';
 import wrapper from '../store/configureStore';
-import { loadPostRequestAction } from '../reducers/post';
+import { loadPostsRequestAction } from '../reducers/post';
 
 const ErrorMessage = styled.div`
   color: red;
@@ -152,7 +152,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
       axios.defaults.headers.Cookie = cookie;
     }
     context.store.dispatch(loadMyInfoRequestAction());
-    context.store.dispatch(loadPostRequestAction());
     context.store.dispatch(END);
     await context.store.sagaTask.toPromise();
   }

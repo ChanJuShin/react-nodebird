@@ -13,7 +13,7 @@ import {
   loadMyInfoRequestAction
 } from '../reducers/user';
 import wrapper from '../store/configureStore';
-import { loadPostRequestAction } from '../reducers/post';
+import { loadPostsRequestAction } from '../reducers/post';
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -58,7 +58,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
       axios.defaults.headers.Cookie = cookie;
     }
     context.store.dispatch(loadMyInfoRequestAction());
-    context.store.dispatch(loadPostRequestAction());
     context.store.dispatch(END);
     await context.store.sagaTask.toPromise();
   }

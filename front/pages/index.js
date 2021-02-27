@@ -5,7 +5,7 @@ import axios from 'axios';
 import AppLayout from '../components/AppLayout';
 import PostForm from '../components/PostForm';
 import PostCard from '../components/PostCard';
-import { loadPostRequestAction } from '../reducers/post';
+import { loadPostsRequestAction } from '../reducers/post';
 import { loadMyInfoRequestAction } from '../reducers/user';
 import wrapper from '../store/configureStore';
 
@@ -61,7 +61,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       axios.defaults.headers.Cookie = cookie;
     }
     context.store.dispatch(loadMyInfoRequestAction());
-    context.store.dispatch(loadPostRequestAction());
+    context.store.dispatch(loadPostsRequestAction());
     context.store.dispatch(END);
     await context.store.sagaTask.toPromise();
   }
