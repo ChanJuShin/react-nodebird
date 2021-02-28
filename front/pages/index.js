@@ -5,7 +5,10 @@ import axios from 'axios';
 import AppLayout from '../components/AppLayout';
 import PostForm from '../components/PostForm';
 import PostCard from '../components/PostCard';
-import { loadPostsRequestAction } from '../reducers/post';
+import {
+  loadPostRequestAction,
+  loadPostsRequestAction
+} from '../reducers/post';
 import { loadMyInfoRequestAction } from '../reducers/user';
 import wrapper from '../store/configureStore';
 
