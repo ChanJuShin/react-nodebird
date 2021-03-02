@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
+import moment from 'moment';
 import { Avatar, Button, Card, Comment, List, Popover } from 'antd';
 import {
   EllipsisOutlined,
@@ -20,6 +21,8 @@ import {
   unlikePosttRequestAction
 } from '../reducers/post';
 import FollowButton from './FollowButton';
+
+moment.locale('ko');
 
 const PostCard = ({ post }) => {
   const dispatch = useDispatch();
@@ -112,6 +115,9 @@ const PostCard = ({ post }) => {
               )
             }
           >
+            <div style={{ float: 'right' }}>
+              {moment(post.createdAt).format('YYYY.MM.DD')}
+            </div>
             <Card.Meta
               avatar={
                 <Link href={`/user/${post.Retweet.User.id}`}>
@@ -125,17 +131,22 @@ const PostCard = ({ post }) => {
             />
           </Card>
         ) : (
-          <Card.Meta
-            avatar={
-              <Link href={`/user/${post.User.id}`}>
-                <a>
-                  <Avatar>{post.User.nickname[0]}</Avatar>
-                </a>
-              </Link>
-            }
-            title={post.User.nickname}
-            description={<PostCardContent postData={post.content} />}
-          />
+          <>
+            <div style={{ float: 'right' }}>
+              {moment(post.createdAt).format('YYYY.MM.DD')}
+            </div>
+            <Card.Meta
+              avatar={
+                <Link href={`/user/${post.User.id}`}>
+                  <a>
+                    <Avatar>{post.User.nickname[0]}</Avatar>
+                  </a>
+                </Link>
+              }
+              title={post.User.nickname}
+              description={<PostCardContent postData={post.content} />}
+            />
+          </>
         )}
       </Card>
       {commentFormOpened && (
