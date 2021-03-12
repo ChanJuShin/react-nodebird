@@ -46,7 +46,12 @@ app.use(
   session({
     saveUninitialized: false,
     resave: false,
-    secret: process.env.COOKIE_SECRET
+    secret: process.env.COOKIE_SECRET,
+    cookie: {
+      httpOnly: true,
+      secure: false,
+      domain: process.env.NODE_ENV === 'production' && '.mcscj.site'
+    }
   })
 );
 app.use(passport.initialize());
