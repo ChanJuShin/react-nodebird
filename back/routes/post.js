@@ -166,7 +166,7 @@ router.get('/:postId', async (req, res, next) => {
 });
 
 router.post('/images', isLoggedIn, upload.array('image'), (req, res, next) => {
-  res.json(req.files.map((v) => v.location));
+  res.json(req.files.map((v) => v.location.replace(/\/original\//, '/thumb/')));
 });
 
 router.post('/:postId/comment', isLoggedIn, async (req, res, next) => {
