@@ -32,7 +32,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use(helmet());
   app.use(
     cors({
-      origin: 'http://mcscj.site',
+      origin: 'https://mcscj.site',
       credentials: true
     })
   );
